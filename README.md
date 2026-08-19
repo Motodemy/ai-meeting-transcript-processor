@@ -1,11 +1,24 @@
 # AI Meeting Transcript Processor v0.1
 
-A battle-tested prompt designed to process raw meeting transcripts into structured executive summaries, key decisions, action items, open questions, and follow-up emails without AI hallucinations.
+A structured prompt framework designed to process raw meeting transcripts into executive summaries, key decisions, action items, open questions, and follow-up emails with explicit ambiguity tracking.
 
-## Features
-- **Strict Hallucination Control**: Minimizes invent dates, priorities, or assignees.
-- **Explicit Tracking**: Clearly separates superseded decisions `[ZMIANA USTALENIA]` from unresolved conflicts `[SPRZECZNOŚĆ]`.
-- **Action Items Table**: Formatted output for task tracking.
+## Overview
+Standard LLM prompts often infer deadlines, assignees, or priorities when raw transcripts are vague. This prompt enforces strict compliance rules: missing or ambiguous data is explicitly tagged using standardized markers.
 
-## Usage
-Copy the Master Prompt from `prompt.txt` and paste it into ChatGPT, Claude, or any LLM alongside your transcript.
+> **Language Note:** The system prompt and generated markers are configured for Polish-language meeting transcripts (`[BRAK OSOBY]`, `[BRAK TERMINU]`, `[DO WERYFIKACJI]`, `[ZMIANA USTALENIA]`, `[SPRZECZNOŚĆ]`).
+
+## Core Rules & Features
+- **Hallucination Suppression**: Restricts inferred priorities, missing assignees, or unmentioned dates.
+- **Explicit Ambiguity Tracking**:
+  - Missing Assignee -> `[BRAK OSOBY]`
+  - Missing Deadline -> `[BRAK TERMINU]`
+  - Ambiguous Info -> `[DO WERYFIKACJI]`
+- **Conflict & Superseded Resolution**:
+  - Superseded Agreement -> `[ZMIANA USTALENIA]`
+  - Unresolved Conflict -> `[SPRZECZNOŚĆ]`
+- **Action Items Matrix**: Formatted Markdown table ready for export.
+
+## How to Use
+1. Open `prompt.txt` from this repository.
+2. Copy the system prompt.
+3. Paste it into your LLM (ChatGPT, Claude, Gemini) along with your raw transcript under the `TRANSKRYPCJA DO ANALIZY:` block.
